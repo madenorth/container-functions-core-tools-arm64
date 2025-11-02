@@ -1,5 +1,0 @@
-/workspaces/azure-functions-csharp-devcontainer/src/MyFunctionApp/obj/Debug/net9.0/MyFunctionApp.csproj.AssemblyReference.cache
-/workspaces/azure-functions-csharp-devcontainer/src/MyFunctionApp/obj/Debug/net9.0/MyFunctionApp.GeneratedMSBuildEditorConfig.editorconfig
-/workspaces/azure-functions-csharp-devcontainer/src/MyFunctionApp/obj/Debug/net9.0/MyFunctionApp.AssemblyInfoInputs.cache
-/workspaces/azure-functions-csharp-devcontainer/src/MyFunctionApp/obj/Debug/net9.0/MyFunctionApp.AssemblyInfo.cs
-/workspaces/azure-functions-csharp-devcontainer/src/MyFunctionApp/obj/Debug/net9.0/MyFunctionApp.csproj.CoreCompileInputs.cache

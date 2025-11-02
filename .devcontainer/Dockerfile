@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/dotnet:1-9.0-bookworm
+FROM mcr.microsoft.com/devcontainers/dotnet:1-8.0-bookworm
 
 # ARG VARIANT="6.0-focal"
 # FROM mcr.microsoft.com/devcontainers/dotnet:0-${VARIANT}
