@@ -1,0 +1,20 @@
+{
+  "name": "Azure Functions C# Development",
+  "dockerFile": "Dockerfile",
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "dotnet dev-certs https --trust",
+	"postAttachCommand": "cd src/MyFunctionApp",
+
+  // "settings": {
+  //   "dotnet.defaultSolution": "src/MyFunctionApp/MyFunctionApp.csproj"
+  // },
+  "extensions": [
+    "ms-dotnettools.csharp",
+    "ms-azuretools.vscode-azurefunctions",
+    "ms-azuretools.vscode-azurestorage"
+  ],
+  // //"postCreateCommand": "dotnet restore src/MyFunctionApp/MyFunctionApp.csproj",
+  // "remoteUser": "vscode",
+  "runArgs": [ "--name=function-csharp-devcontainer" ]
+}
