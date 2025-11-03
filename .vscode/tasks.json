@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/MyFunctionApp/MyFunctionApp.csproj"
+                "${workspaceFolder}/src/src.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -27,7 +27,7 @@
             "type": "process",
             "args": [
                 "test",
-                "${workspaceFolder}/src/MyFunctionApp/MyFunctionApp.csproj"
+                "${workspaceFolder}/src/src.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -42,7 +42,7 @@
             "type": "process",
             "problemMatcher": "$msCompile",
             "options": {
-                "cwd": "${workspaceFolder}/src/MyFunctionApp"
+                "cwd": "${workspaceFolder}/src"
             }
         },
         {
@@ -101,7 +101,7 @@
             "type": "func",
             "dependsOn": "build (functions)",
             "options": {
-                "cwd": "${workspaceFolder}/src/MyFunctionApp/bin/Debug/net8.0"
+                "cwd": "${workspaceFolder}/src/bin/Debug/net8.0"
             },
             "command": "host start",
             "isBackground": true,

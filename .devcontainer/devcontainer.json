@@ -1,20 +1,19 @@
 {
-  "name": "Azure Functions C# Development",
+  "name": "Azure Functions Core C# Arm64 Container",
   "dockerFile": "Dockerfile",
 
-  // Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "dotnet dev-certs https --trust",
-	"postAttachCommand": "cd src/MyFunctionApp",
-
-  // "settings": {
-  //   "dotnet.defaultSolution": "src/MyFunctionApp/MyFunctionApp.csproj"
-  // },
-  "extensions": [
-    "ms-dotnettools.csharp",
-    "ms-azuretools.vscode-azurefunctions",
-    "ms-azuretools.vscode-azurestorage"
-  ],
-  // //"postCreateCommand": "dotnet restore src/MyFunctionApp/MyFunctionApp.csproj",
-  // "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-azuretools.vscode-azurefunctions",
+        "ms-azuretools.vscode-azurestorage"
+      ]
+    }
+  },
+  "forwardPorts": [7071],
+  
+  "remoteUser": "vscode",
+  "workspaceFolder": "/workspaces/azure-functions-csharp-devcontainer",
   "runArgs": [ "--name=function-csharp-devcontainer" ]
 }
