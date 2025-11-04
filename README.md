@@ -29,3 +29,31 @@ Change `host start` in tasks.json to `host start --useHttps --useDefaultCert`
 - [Functions Core Tools Github Repository](https://github.com/Azure/azure-functions-core-tools)
 - [Github issue log for enabling Arm64 Core Tools](https://github.com/Azure/azure-functions-core-tools/issues/4279)
 - [VS Code Dev Container Documentation](https://code.visualstudio.com/docs/devcontainers/create-dev-container)
+
+## Using Azurite (local Storage emulator)
+
+This devcontainer runs Azurite (the Azure Storage emulator) as a separate Docker container via docker-compose so your Functions can use a local storage endpoint.
+
+What was added:
+- A `docker-compose.yml` file that defines both the devcontainer and Azurite services.
+- The Azurite container runs the official Microsoft Azure Storage Azurite image.
+- Ports 10000 (Blob), 10001 (Queue), 10002 (Table), and 7071 (Functions) are exposed.
+- Data is persisted in the `./azurite/data` directory.
+
+How to use:
+
+1. Reopen the repository in the dev container (Command Palette -> Remote-Containers: Reopen in Container). Docker Compose will start both the devcontainer and Azurite.
+2. Azurite starts automatically with the containers. You can also start/stop/restart it manually using the VS Code Tasks: `Start Azurite` / `Stop Azurite` / `Restart Azurite`.
+3. The Functions app already uses `UseDevelopmentStorage=true` in `src/local.settings.json`, so the Functions runtime will connect to Azurite at the default local endpoints (http://127.0.0.1:10000 etc.).
+
+Verify:
+
+- Azurite should be running automatically when the dev container starts.
+- Start the Functions host (run the `run` task or `func start` in the `src` folder).
+- Your function should connect to the local storage emulator for triggers/bindings that require storage.
+
+Notes:
+
+- Data is persisted in `./azurite/data` and will survive container restarts.
+- The devcontainer shares the network with Azurite for seamless connectivity.
+- Both services are defined in `.devcontainer/docker-compose.yml`.

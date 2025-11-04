@@ -1,18 +1,19 @@
 {
   "name": "Azure Functions Core C# Arm64 Container",
-  "dockerFile": "Dockerfile",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-dotnettools.csharp",
         "ms-azuretools.vscode-azurefunctions",
-        "ms-azuretools.vscode-azurestorage"
+        "ms-azuretools.vscode-azurestorage",
+        "azurite.azurite"
       ]
     }
   },
-  "forwardPorts": [7071],
   
-  "remoteUser": "vscode",
-  "runArgs": [ "--name=function-csharp-devcontainer" ]
+  "remoteUser": "vscode"
 }
