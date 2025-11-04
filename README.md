@@ -15,6 +15,16 @@ To get started with this project, follow these steps:
 ## Issues
 - At present (October 2025), it doesn't work with .NET 9.
 
+## Using HTTPS
+
+The following commands need running as the user in the container
+```sh
+dotnet tool update -g linux-dev-certs
+dotnet linux-dev-certs install
+```
+
+Change `host start` in tasks.json to `host start --useHttps --useDefaultCert`
+
 ## Resources
 - [Functions Core Tools Github Repository](https://github.com/Azure/azure-functions-core-tools)
 - [Github issue log for enabling Arm64 Core Tools](https://github.com/Azure/azure-functions-core-tools/issues/4279)
