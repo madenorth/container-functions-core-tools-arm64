@@ -61,7 +61,7 @@
             },
             "problemMatcher": "$msCompile",
             "options": {
-                "cwd": "${workspaceFolder}/src/MyFunctionApp"
+                "cwd": "${workspaceFolder}/src"
             }
         },
         {
@@ -77,7 +77,7 @@
             "type": "process",
             "problemMatcher": "$msCompile",
             "options": {
-                "cwd": "${workspaceFolder}/src/MyFunctionApp"
+                "cwd": "${workspaceFolder}/src"
             }
         },
         {
@@ -94,7 +94,7 @@
             "dependsOn": "clean release (functions)",
             "problemMatcher": "$msCompile",
             "options": {
-                "cwd": "${workspaceFolder}/src/MyFunctionApp"
+                "cwd": "${workspaceFolder}/src"
             }
         },
         {
@@ -106,6 +106,20 @@
             "command": "host start",
             "isBackground": true,
             "problemMatcher": "$func-dotnet-watch"
-        }
+        },
+        {
+            "label": "Terminate All Tasks",
+            "command": "echo ${input:terminate}",
+            "type": "shell",
+            "problemMatcher": []
+          }
+    ],
+	"inputs": [
+		{
+            "id": "terminate",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "terminateAll"
+          }
     ]
 }
