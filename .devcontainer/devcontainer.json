@@ -14,6 +14,7 @@
       ]
     }
   },
-  
-  "remoteUser": "vscode"
+
+  "remoteUser": "vscode",
+  "postCreateCommand": "chmod +x .devcontainer/azurite-start.sh && ./.devcontainer/azurite-start.sh && dotnet restore src/"
 }

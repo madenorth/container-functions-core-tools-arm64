@@ -1,32 +1,53 @@
+#!/bin/bash
+# filepath: /workspaces/azure-functions-csharp-devcontainer/.devcontainer/azurite-start.sh
 
-#!/usr/bin/env bash
-# Start Azurite in the background (if not already running) and persist data to ./azurite/data
-# This script is intended to be run inside the devcontainer (postCreateCommand) or manually from the repo root.
+set -e
 
-set -euo pipefail
+# Azurite configuration
+ACCOUNT_NAME="devstoreaccount1"
+ACCOUNT_KEY="Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=="
+# include the account path here
+BLOB_ENDPOINT="http://127.0.0.1:10000/devstoreaccount1"
 
-# Resolve repository root reliably (script is in .devcontainer/)
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+# Build a connection string Az CLI will accept
+export AZURE_STORAGE_CONNECTION_STRING="DefaultEndpointsProtocol=http;AccountName=${ACCOUNT_NAME};AccountKey=${ACCOUNT_KEY};BlobEndpoint=${BLOB_ENDPOINT};"
 
-# Persist azurite data under the repository at ./azurite/data (as requested)
-AZ_DIR="$REPO_ROOT/azurite/data"
-LOGFILE="$REPO_ROOT/azurite/azurite.out.log"
+# Wait for Azurite to be ready
+echo "Waiting for Azurite to be ready..."
+for i in {1..30}; do
+    if curl -s "${BLOB_ENDPOINT}?restype=account&comp=properties" > /dev/null 2>&1; then
+        echo "✓ Azurite is ready!"
+        break
+    fi
+    echo "  Attempt $i/30: Azurite not ready yet..."
+    sleep 2
+done
 
-mkdir -p "$AZ_DIR"
-chown -R vscode:vscode "$REPO_ROOT/azurite" || true
+# Container names to create
+CONTAINERS=(
+    "samples-workitems"
+)
 
-if command -v azurite >/dev/null 2>&1; then
-  if pgrep -f "azurite" >/dev/null 2>&1; then
-    echo "Azurite already running"
-  else
-    echo "Starting Azurite (blob/queue) -> logs: $LOGFILE, data: $AZ_DIR"
-    # Start azurite in background and detach so the postCreateCommand can finish
-    nohup azurite --silent --location "$AZ_DIR" --debug "$REPO_ROOT/azurite/debug.log" > "$LOGFILE" 2>&1 &
-    sleep 1
-    echo "Azurite started"
-  fi
-else
-  echo "azurite not found in PATH. If the container image build succeeded it should be available."
-  exit 0
-fi
+echo ""
+echo "Creating storage containers in Azurite..."
+echo "Blob endpoint: $BLOB_ENDPOINT"
+echo ""
+
+for CONTAINER in "${CONTAINERS[@]}"; do
+    echo "Creating container: $CONTAINER"
+    
+    az storage container create \
+        --name "$CONTAINER" \
+        --connection-string "$AZURE_STORAGE_CONNECTION_STRING" \
+        --only-show-errors \
+        --output table
+    
+    if [ $? -eq 0 ]; then
+        echo "✓ Container '$CONTAINER' created successfully"
+    else
+        echo "✗ Failed to create container '$CONTAINER'"
+    fi
+    echo ""
+done
+
+echo "All containers processed!"
